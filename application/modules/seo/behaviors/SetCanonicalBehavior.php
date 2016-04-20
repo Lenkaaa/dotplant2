@@ -40,16 +40,15 @@ class SetCanonicalBehavior extends Behavior
         }
 
         if ($setCanonical) {
-            $params = $get;
-            $params[0] = '/' . Yii::$app->controller->getRoute();
+            $get[0] = '/' . Yii::$app->controller->getRoute();
             if ('/' . Yii::$app->requestedAction->controller->route === Yii::getAlias('@product')) {
-                $params['model'] = Product::findById(Yii::$app->request->get('model_id'));
-                unset($params['model_id']);
+                $get['model'] = Product::findById(Yii::$app->request->get('model_id'));
+                unset($get['model_id']);
             }
             $this->owner->view->registerLinkTag(
                 [
                     'rel' => 'canonical',
-                    'href' => Url::toRoute($params, true)
+                    'href' => Url::toRoute($get, true)
                 ]
             );
 
